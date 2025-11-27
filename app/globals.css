@@ -1,26 +1,153 @@
+/* ---------------------------------------------------
+   TAILWIND IMPORT (Required and must be first)
+--------------------------------------------------- */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---------------------------------------------------
+   THEME TOKENS — Tailwind v4 colors, fonts, spacing
+--------------------------------------------------- */
+@theme {
+  /* Brand Colors */
+  --color-primary: #ff6b35;
+  --color-primary-hover: #ff5722;
+  --color-primary-light: #ffb199;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-secondary: #6366f1;
+  --color-secondary-light: #818cf8;
 
+  /* Background & Text */
+  --color-background: #0a0c10;
+  --color-foreground: #ededed;
+
+  /* Optional Neutral Palette */
+  --color-surface: #14161b;
+  --color-muted: #1e1e1e;
+  --color-border: #2a2a2a;
+
+  /* Typography (custom fonts if needed) */
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* ---------------------------------------------------
+   DARK MODE OVERRIDES (Optional)
+--------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
   }
 }
 
+/* ---------------------------------------------------
+   BASE STYLES
+--------------------------------------------------- */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------------------------------------------
+   GRADIENT BACKGROUNDS
+--------------------------------------------------- */
+
+.gradient-mesh {
+  background:
+    linear-gradient(to bottom, #08090c, #0a0c10),
+    radial-gradient(at 20% 30%, var(--color-primary-light) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, var(--color-secondary-light) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #0a0c10 0px, transparent 100%);
+  background-size: cover;
+}
+
+@layer utilities {
+  .hero-gradient {
+    background: linear-gradient(180deg, #0a0c10 0%, #13151a 50%, #08090c 100%);
+  }
+
+  /* ---------------------------------------------------
+     BUTTON STYLES — Gradient Button
+  --------------------------------------------------- */
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-medium text-white 
+           transition duration-300 shadow-md cursor-pointer;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+  }
+
+  /* ---------------------------------------------------
+     NAVBAR STYLES — Sticky, Blur, Hover Animation
+  --------------------------------------------------- */
+
+  /* Sticky Navbar */
+  .navbar {
+    @apply fixed top-0 left-0 w-full z-50 
+           backdrop-blur-xl bg-black/20 border-b border-white/10;
+  }
+
+  /* Navbar Container */
+  .navbar-container {
+    @apply max-w-7xl mx-auto px-6 py-4 flex items-center justify-between;
+  }
+
+  /* Nav Links Wrapper */
+  .navbar-links {
+    @apply flex items-center gap-8 text-white;
+  }
+
+  /* Individual Nav Link */
+  .navbar-link {
+    @apply relative text-white transition-all duration-300;
+  }
+
+  /* Hover: scale + color */
+  .navbar-link:hover {
+    @apply text-primary scale-105;
+  }
+
+  /* Underline hover animation */
+  .navbar-link::after {
+    content: "";
+    @apply absolute left-0 bottom-[-3px] h-[2px] w-0 bg-primary transition-all duration-300;
+  }
+
+  .navbar-link:hover::after {
+    @apply w-full;
+  }
+  /* EVENT CARD (premium dark style) */
+.event-card {
+  @apply bg-[#111318] rounded-xl transition-all duration-300;
+}
+
+.event-card:hover {
+  @apply scale-[1.02] shadow-2xl shadow-black/50;
+}
+
+.event-card-img {
+  @apply w-full h-[230px] object-cover transition duration-300 rounded-xl;
+}
+
+.event-card:hover .event-card-img {
+  @apply scale-105 brightness-75;
+}
+
+.event-card-title {
+  @apply text-xl font-semibold tracking-wide;
+}
+
 }
